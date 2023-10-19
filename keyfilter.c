@@ -1,62 +1,82 @@
 #include <stdio.h>
 #include <string.h>
 
-#define maxColumns 43
-#define maxCharacters 101
+#define maxColumns 42
+#define maxCharacters 100
 #define true 1
 #define false 0
 
 char toLowerCase(char x);
-int checker(int max, char *saved, char element);
+int checkerForNoArgs(int max, char *saved, char element);
 
-char adresy[maxColumns][maxCharacters] = {};
+
+char adresses[maxColumns][maxCharacters] = {};
+int status = false;
 
 int main(int argc, char *argv[]){
 
-    int input, columns = 0, characters = 0;
-    (void)argv;
-    
     // ZAPIS Z STDIN DO 2D ARRAYU
+    int input, column = 0, character = 0;
     while ((input = getc(stdin)) != EOF)
     {   
         if (input != '\n'){
-            adresy[columns][characters] = input;
-            characters++;
+            adresses[column][character] = input;
+            character++;
         }else{
-            columns++;
-            characters = 0;
+            column++;
+            character = 0;
+        }
+
+        if(column > maxColumns || character > maxCharacters){
+
+            fprintf(stderr, "File has more Columns or Characters that are set by default!\n");
+            return 0;
         }
     }
 
-    // 1 PRIPAD AK UZIVATEL NEZADA HLADA PISMENKO/KA
+
+    // 1 PRIPAD AK UZIVATEL NEZADA HLADANE PISMENKO/KA
     if(argc == 1){
         printf("ENABLE:");
         int step = 1, count = 1;
-        char saved[maxColumns] = {};
-        saved[0] = adresy[0][0];
+        char savedAdresses[maxColumns] = {};
+        savedAdresses[0] = adresses[0][0];
 
-        while(adresy[step][0] != '\0'){
-            if(checker(maxColumns, saved, adresy[step][0]) == true){
-                saved[count] = adresy[step][0];
+        while(adresses[step][0] != '\0'){
+            if(checkerForNoArgs(maxColumns, savedAdresses, adresses[step][0]) == true){
+                savedAdresses[count] = adresses[step][0];
                 count++;
             }else{ }
             step++;
         }
 
-        for(unsigned int i = 0; i < strlen(saved); i++){
-            printf(" %c |", saved[i]);
+        for(unsigned int i = 0; i < strlen(savedAdresses); i++){
+            printf(" %c |", savedAdresses[i]);
         } 
         printf("\n");
         return 0;
     }
 
+    column = 0;
+    character = 0;
+    //char savedChar;
+    //int savedColumns[maxColumns];
+    while(adresses[column][character] != '\0'){
+         if(argv[1][character] == adresses[column][character]){
+            status = true;
+            //savedChar = argv[1][character];
+         }else{ }
+        column++;
+    }
+    
+    
 
     return 0;
 }
 
 
 //if true nenachadza sa tam
-int checker(int max, char *saved, char element){
+int checkerForNoArgs(int max, char *saved, char element){
     int output = true;
     for(int step = 0; step < max; step++){
         if(element == saved[step] || element == '\0'){
@@ -80,10 +100,10 @@ char toLowerCase(char x){
     //printing
     // columns = 0;
     // characters = 0;
-    // while(adresy[columns][characters] != '\0'){
-    //     while (adresy[columns][characters] != '\0'){
-    //         if(toLowerCase(adresy[columns][characters]) == toLowerCase(argv[1][0])){
-    //             printf("%c", adresy[columns][characters]);
+    // while(adresses[columns][characters] != '\0'){
+    //     while (adresses[columns][characters] != '\0'){
+    //         if(toLowerCase(adresses[columns][characters]) == toLowerCase(argv[1][0])){
+    //             printf("%c", adresses[columns][characters]);
     //         }else{ 
 
     //         }
