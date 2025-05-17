@@ -1,4 +1,4 @@
-# keyfilter-school
+# Keyfilter Search Application in C
 A C project on the basics of programming in the first year of high school. The program is actually a remake of the gps search from the car. It's a search based on letters from a subfile where the cities of streets are stored, or whatever. This was the main focus of the program but it can be used in any way
  
 ## Usage
